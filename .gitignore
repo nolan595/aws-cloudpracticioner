@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# serwist — generated at build time, not source
+/public/sw.js
+/public/sw.js.map
+
+# next.js dev service worker artefact
+/public/swe-worker-*.js

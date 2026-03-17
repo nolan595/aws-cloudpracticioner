@@ -1,0 +1,225 @@
+export const EXAM_META = {
+  code: "CLF-C02",
+  name: "AWS Certified Cloud Practitioner",
+  level: "Foundational",
+  duration: 90, // minutes
+  totalQuestions: 65,
+  scoredQuestions: 50,
+  unscoredQuestions: 15, // not identified on exam
+  passingScore: 700,
+  maxScore: 1000,
+  minScore: 100,
+  cost: 100, // USD
+  format: ["Multiple Choice (1 correct from 4)", "Multiple Response (2+ correct from 5+)"],
+  languages: ["English", "Japanese", "Korean", "Portuguese (Brazil)", "Simplified Chinese", "Traditional Chinese", "French", "German", "Italian", "Spanish (Latin America)", "Spanish (Spain)", "Indonesian", "Arabic"],
+  deliveredBy: "Pearson VUE (in-person or online proctored)",
+  validFor: 3, // years
+  recertificationOptions: [
+    "Pass the latest CLF-C02 exam",
+    "Pass an Associate or Professional level exam",
+    "AWS Cloud Quest: Recertify game-based option",
+  ],
+} as const;
+
+export const DOMAINS = [
+  {
+    id: 1,
+    name: "Cloud Concepts",
+    weight: 24,
+    color: "blue",
+    taskStatements: [
+      "Define the benefits of the AWS Cloud",
+      "Identify design principles of the AWS Cloud",
+      "Understand the benefits of and strategies for migration to the AWS Cloud",
+      "Understand concepts of cloud economics",
+    ],
+    keyTopics: [
+      "Cloud computing (NIST 5 characteristics)",
+      "6 advantages of cloud computing",
+      "Deployment models: Public, Private, Hybrid",
+      "Service models: IaaS, PaaS, SaaS",
+      "AWS Well-Architected Framework (6 pillars)",
+      "AWS Cloud Adoption Framework (CAF) — 6 perspectives",
+      "Total Cost of Ownership (TCO)",
+      "AWS global infrastructure overview",
+    ],
+  },
+  {
+    id: 2,
+    name: "Security & Compliance",
+    weight: 30,
+    color: "red",
+    taskStatements: [
+      "Understand the AWS shared responsibility model",
+      "Understand AWS Cloud security, governance, and compliance concepts",
+      "Identify AWS access management capabilities",
+      "Identify components and resources for security",
+    ],
+    keyTopics: [
+      "Shared Responsibility Model",
+      "IAM (users, groups, roles, policies, MFA)",
+      "AWS Organizations & Service Control Policies",
+      "Compliance programs (PCI DSS, HIPAA, SOC, FedRAMP)",
+      "AWS Artifact",
+      "KMS, CloudHSM",
+      "Shield (Standard/Advanced), WAF, Firewall Manager",
+      "GuardDuty, Inspector, Macie, Security Hub",
+      "CloudTrail, Config",
+      "Secrets Manager, Systems Manager",
+    ],
+  },
+  {
+    id: 3,
+    name: "Cloud Technology & Services",
+    weight: 34,
+    color: "green",
+    taskStatements: [
+      "Define methods of deploying and operating in the AWS Cloud",
+      "Define the AWS global infrastructure",
+      "Identify AWS compute services",
+      "Identify AWS database services",
+      "Identify AWS network services",
+      "Identify AWS storage services",
+      "Identify AWS AI/ML and analytics services",
+      "Identify services from other in-scope AWS service categories",
+    ],
+    keyTopics: [
+      "EC2 (instance types, pricing, AMIs)",
+      "Lambda, Fargate, ECS, EKS",
+      "S3 (storage classes, lifecycle, versioning)",
+      "EBS, EFS, FSx",
+      "RDS, Aurora, DynamoDB, ElastiCache, Redshift",
+      "VPC, subnets, Security Groups, NACLs",
+      "Route 53, CloudFront, Global Accelerator",
+      "Direct Connect, Site-to-Site VPN",
+      "SQS, SNS, Kinesis, EventBridge",
+      "CloudFormation, CDK, Elastic Beanstalk",
+      "CloudWatch, CloudTrail, X-Ray",
+      "Rekognition, Transcribe, Polly, SageMaker",
+    ],
+  },
+  {
+    id: 4,
+    name: "Billing, Pricing & Support",
+    weight: 12,
+    color: "yellow",
+    taskStatements: [
+      "Compare AWS pricing models",
+      "Understand resources for billing, budget, and cost management",
+      "Identify AWS technical resources and support options",
+    ],
+    keyTopics: [
+      "Pricing models: On-Demand, Reserved, Spot, Savings Plans",
+      "Free Tier (12-month, Always Free, Trials)",
+      "AWS Pricing Calculator",
+      "Cost Explorer, Budgets, Cost & Usage Report",
+      "Consolidated Billing / Organizations",
+      "Compute Optimizer",
+      "Support plans (Basic, Developer, Business, Enterprise On-Ramp, Enterprise)",
+      "Trusted Advisor",
+      "AWS Marketplace",
+    ],
+  },
+] as const;
+
+export const WELL_ARCHITECTED_PILLARS = [
+  {
+    name: "Operational Excellence",
+    description: "Running and monitoring systems to deliver business value and continually improve processes",
+    principles: ["Perform operations as code", "Annotate documentation", "Make frequent, small, reversible changes", "Refine operations procedures frequently", "Anticipate failure", "Learn from all operational failures"],
+  },
+  {
+    name: "Security",
+    description: "Protecting information, systems, and assets while delivering business value",
+    principles: ["Implement a strong identity foundation", "Enable traceability", "Apply security at all layers", "Automate security best practices", "Protect data in transit and at rest", "Keep people away from data", "Prepare for security events"],
+  },
+  {
+    name: "Reliability",
+    description: "The ability of a workload to perform its intended function correctly and consistently",
+    principles: ["Automatically recover from failure", "Test recovery procedures", "Scale horizontally to increase aggregate workload availability", "Stop guessing capacity", "Manage change through automation"],
+  },
+  {
+    name: "Performance Efficiency",
+    description: "Using computing resources efficiently to meet system requirements",
+    principles: ["Democratize advanced technologies", "Go global in minutes", "Use serverless architectures", "Experiment more often", "Consider mechanical sympathy"],
+  },
+  {
+    name: "Cost Optimization",
+    description: "Ability to run systems to deliver business value at the lowest price point",
+    principles: ["Implement cloud financial management", "Adopt a consumption model", "Measure overall efficiency", "Stop spending money on undifferentiated heavy lifting", "Analyze and attribute expenditure"],
+  },
+  {
+    name: "Sustainability",
+    description: "Minimizing the environmental impacts of running cloud workloads",
+    principles: ["Understand your impact", "Establish sustainability goals", "Maximize utilization", "Anticipate and adopt new hardware and software offerings", "Use managed services", "Reduce the downstream impact of your cloud workloads"],
+  },
+] as const;
+
+export const SUPPORT_PLANS = [
+  {
+    name: "Basic",
+    price: "Free",
+    features: [
+      "Access to whitepapers, documentation, and support forums",
+      "AWS Personal Health Dashboard",
+      "7 core Trusted Advisor checks",
+      "No technical support",
+    ],
+    responseTime: "N/A",
+    channels: [],
+  },
+  {
+    name: "Developer",
+    price: "From $29/month (or 3% of monthly usage)",
+    features: [
+      "All Basic features",
+      "Business hours email access to Cloud Support Associates",
+      "Unlimited support cases",
+      "General guidance < 24 hours",
+      "System impaired < 12 hours",
+    ],
+    responseTime: "< 24 business hours",
+    channels: ["Email (business hours)"],
+  },
+  {
+    name: "Business",
+    price: "From $100/month (or 10% of monthly usage)",
+    features: [
+      "All Developer features",
+      "24/7 phone, email, chat support",
+      "Full Trusted Advisor checks",
+      "AWS Support API",
+      "Production system impaired < 4 hours",
+      "Production system down < 1 hour",
+      "Infrastructure Event Management (for additional fee)",
+    ],
+    responseTime: "< 1 hour for production down",
+    channels: ["Phone", "Email", "Chat"],
+  },
+  {
+    name: "Enterprise On-Ramp",
+    price: "From $5,500/month",
+    features: [
+      "All Business features",
+      "Pool of Technical Account Managers (TAMs)",
+      "Business-critical system down < 30 minutes",
+      "Concierge Support Team",
+    ],
+    responseTime: "< 30 minutes for business-critical",
+    channels: ["Phone", "Email", "Chat"],
+  },
+  {
+    name: "Enterprise",
+    price: "From $15,000/month",
+    features: [
+      "All Enterprise On-Ramp features",
+      "Designated Technical Account Manager (TAM)",
+      "Business-critical system down < 15 minutes",
+      "Infrastructure Event Management included",
+      "Training and game days",
+      "Concierge Support",
+    ],
+    responseTime: "< 15 minutes for business-critical",
+    channels: ["Phone", "Email", "Chat", "Dedicated TAM"],
+  },
+] as const;
