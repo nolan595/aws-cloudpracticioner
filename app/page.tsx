@@ -20,6 +20,10 @@ import {
 import { useProgress } from "@/hooks/useProgress";
 import { questions, DOMAIN_NAMES, DOMAIN_WEIGHTS } from "@/data/questions";
 import type { Domain } from "@/data/questions";
+import LevelBadge from "@/components/LevelBadge";
+import FocusAreas from "@/components/FocusAreas";
+import AchievementsGrid from "@/components/AchievementsGrid";
+import XPToast from "@/components/XPToast";
 
 const PASSING_SCORE = 700;
 
@@ -31,7 +35,7 @@ const DOMAIN_COLORS: Record<number, { bar: string; text: string }> = {
 };
 
 export default function Dashboard() {
-  const { progress, stats } = useProgress();
+  const { progress, stats, justEarned, clearJustEarned, lastXPGain, clearLastXPGain } = useProgress();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
@@ -84,6 +88,8 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-white mb-1">Study Dashboard</h1>
           <p className="text-zinc-400 text-sm">65 questions · 90 minutes · Passing score 700/1000</p>
         </div>
+
+        <LevelBadge xp={progress.xp} />
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -151,6 +157,8 @@ export default function Dashboard() {
           </div>
         )}
 
+        <FocusAreas progress={progress} />
+
         {/* Domain breakdown */}
         <div className="bg-zinc-900 border border-white/8 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-4">
@@ -170,7 +178,11 @@ export default function Dashboard() {
                     <div className="flex items-center gap-3 text-xs">
                       <span className="text-zinc-500">{DOMAIN_WEIGHTS[ds.domain as Domain]}% of exam</span>
                       {ds.accuracy !== null && (
-                        <span className={`font-semibold ${ds.accuracy >= 70 ? "text-emerald-400" : "text-red-400"}`}>
+                        <span className={`font-semibold ${
+                          ds.accuracy >= 80 ? "text-emerald-400"
+                            : ds.accuracy >= 60 ? "text-amber-400"
+                            : "text-red-400"
+                        }`}>
                           {ds.accuracy}%
                         </span>
                       )}
@@ -188,6 +200,8 @@ export default function Dashboard() {
             })}
           </div>
         </div>
+
+        <AchievementsGrid earned={progress.achievements} />
 
         {/* Nav cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -282,6 +296,14 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+      <XPToast
+        xpGain={lastXPGain}
+        justEarned={justEarned}
+        onClear={() => {
+          clearLastXPGain();
+          clearJustEarned();
+        }}
+      />
     </div>
   );
 }

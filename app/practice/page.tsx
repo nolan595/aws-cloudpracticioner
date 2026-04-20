@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { ChevronLeft, Shuffle, Filter, RefreshCw, Bookmark, AlertTriangle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ChevronLeft, Shuffle, Filter, RefreshCw, Bookmark, AlertTriangle, Target } from "lucide-react";
 import QuestionCard from "@/components/QuestionCard";
+import XPToast from "@/components/XPToast";
 import { questions, DOMAIN_NAMES, DOMAIN_WEIGHTS } from "@/data/questions";
 import type { Domain } from "@/data/questions";
 import { useProgress } from "@/hooks/useProgress";
 
-type FilterMode = "all" | "domain" | "bookmarked" | "incorrect";
+type FilterMode = "all" | "domain" | "bookmarked" | "incorrect" | "smart";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -26,13 +28,44 @@ const DOMAIN_COLORS: Record<number, string> = {
   4: "bg-amber-500/10 text-amber-300 border-amber-500/20 data-[active=true]:bg-amber-500/20 data-[active=true]:border-amber-400",
 };
 
-export default function PracticePage() {
-  const { progress, recordAnswer, toggleBookmark } = useProgress();
-  const [filterMode, setFilterMode] = useState<FilterMode>("all");
+export default function PracticePageWrapper() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#09090e]" />}>
+      <PracticePage />
+    </Suspense>
+  );
+}
+
+function PracticePage() {
+  const { progress, recordAnswer, toggleBookmark, justEarned, clearJustEarned, lastXPGain, clearLastXPGain } = useProgress();
+  const searchParams = useSearchParams();
+  const urlMode = searchParams.get("mode");
+  const urlService = searchParams.get("service");
+
+  const [filterMode, setFilterMode] = useState<FilterMode>(urlMode === "smart" ? "smart" : "all");
+  const [smartService, setSmartService] = useState<string | null>(urlService);
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
-  const [shuffled, setShuffled] = useState(false);
+  const [shuffled, setShuffled] = useState(urlMode === "smart");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sessionKey, setSessionKey] = useState(0); // forces QuestionCard remount
+  const [sessionKey, setSessionKey] = useState(0);
+
+  useEffect(() => {
+    if (urlMode === "smart") {
+      setFilterMode("smart");
+      setSmartService(urlService);
+      setShuffled(true);
+      setCurrentIndex(0);
+    }
+  }, [urlMode, urlService]);
+
+  const weakServices = useMemo(() => {
+    return Object.entries(progress.servicePerformance)
+      .filter(([, s]) => s.total >= 3)
+      .map(([service, s]) => ({ service, acc: s.correct / s.total }))
+      .sort((a, b) => a.acc - b.acc)
+      .slice(0, 3)
+      .map((e) => e.service);
+  }, [progress.servicePerformance]);
 
   const filteredQuestions = useMemo(() => {
     let pool = [...questions];
@@ -43,10 +76,16 @@ export default function PracticePage() {
       pool = pool.filter((q) => progress.bookmarkedQuestions.includes(q.id));
     } else if (filterMode === "incorrect") {
       pool = pool.filter((q) => progress.incorrectQuestions.includes(q.id));
+    } else if (filterMode === "smart") {
+      if (smartService) {
+        pool = pool.filter((q) => q.service === smartService);
+      } else if (weakServices.length > 0) {
+        pool = pool.filter((q) => q.service && weakServices.includes(q.service));
+      }
     }
 
     return shuffled ? shuffle(pool) : pool;
-  }, [filterMode, selectedDomain, shuffled, progress.bookmarkedQuestions, progress.incorrectQuestions]);
+  }, [filterMode, selectedDomain, shuffled, smartService, weakServices, progress.bookmarkedQuestions, progress.incorrectQuestions]);
 
   const currentQuestion = filteredQuestions[currentIndex];
 
@@ -116,6 +155,15 @@ export default function PracticePage() {
             >
               <AlertTriangle className="w-3 h-3" />
               Incorrect ({progress.incorrectQuestions.length})
+            </button>
+            <button
+              onClick={() => { setFilterMode("smart"); setSmartService(null); setCurrentIndex(0); setSessionKey(k => k + 1); }}
+              disabled={weakServices.length === 0}
+              className={`text-xs px-3 py-1.5 rounded-full border transition-colors flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed ${filterMode === "smart" ? "bg-fuchsia-500/20 text-fuchsia-200 border-fuchsia-400" : "bg-zinc-800 text-zinc-400 border-white/10 hover:border-white/25"}`}
+              title={weakServices.length === 0 ? "Answer at least 3 questions on a service to unlock Smart mode" : "Drill your weakest services"}
+            >
+              <Target className="w-3 h-3" />
+              Smart{filterMode === "smart" && smartService ? `: ${smartService}` : ""}
             </button>
           </div>
 
@@ -197,6 +245,14 @@ export default function PracticePage() {
           </div>
         )}
       </div>
+      <XPToast
+        xpGain={lastXPGain}
+        justEarned={justEarned}
+        onClear={() => {
+          clearLastXPGain();
+          clearJustEarned();
+        }}
+      />
     </div>
   );
 }
