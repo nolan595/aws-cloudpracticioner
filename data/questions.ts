@@ -5020,4 +5020,489 @@ export const questions: Question[] = [
     explanation: "Amazon Connect provides scalable cloud contact centre capabilities with Lex integration, call routing, and analytics.",
     service: "Connect",
   },
+
+  // ─── DOMAIN 1: Cloud Economics (gaps from official exam guide) ───────────────
+  {
+    id: 401,
+    domain: 1,
+    text: "A company currently pays annual maintenance fees for on-premises software licences. When migrating to AWS, they want to continue using the same software. Which licensing strategy lets them apply those existing licences to AWS?",
+    type: "single",
+    options: [
+      "Bring Your Own License (BYOL)",
+      "AWS Marketplace included licence",
+      "AWS License Manager auto-provisioning",
+      "Reserved Instance licence transfer",
+    ],
+    correct: [0],
+    explanation:
+      "BYOL (Bring Your Own License) allows customers to use their existing software licences — such as Windows Server, SQL Server, or Oracle — on AWS infrastructure. This avoids paying for a new licence included with the AWS service. AWS License Manager helps track and manage BYOL licences. The alternative is using licences included with the AWS service (e.g., a Windows EC2 AMI where Microsoft licensing is bundled into the per-hour price).",
+    service: "License Manager",
+  },
+  {
+    id: 402,
+    domain: 1,
+    text: "Which of the following correctly describes the difference between the BYOL model and using an included licence on AWS?",
+    type: "single",
+    options: [
+      "BYOL is only available for Linux operating systems; included licences cover Windows",
+      "BYOL lets you apply existing software licences you already own; included licences bundle the cost into the AWS service price",
+      "BYOL requires a minimum 3-year commitment; included licences are always on-demand",
+      "BYOL is managed by AWS; included licences require the customer to track compliance",
+    ],
+    correct: [1],
+    explanation:
+      "With the BYOL model you bring your own pre-existing software licence (e.g., SQL Server Enterprise) and apply it to AWS resources, avoiding double-paying. Included licences (also called 'licence-included') embed the licence cost in the AWS hourly/monthly price — convenient but potentially more expensive for customers who already own the licence. BYOL is available for many software types including Windows and SQL Server on EC2.",
+  },
+  {
+    id: 403,
+    domain: 1,
+    text: "A company wants to reduce cloud costs without changing architecture. An AWS tool recommends switching from an m5.4xlarge to an m5.xlarge because CPU utilisation has never exceeded 15%. This practice is called:",
+    type: "single",
+    options: [
+      "Auto Scaling",
+      "Rightsizing",
+      "Reserved Instance purchasing",
+      "Cost allocation tagging",
+    ],
+    correct: [1],
+    explanation:
+      "Rightsizing is the process of matching instance types and sizes to actual workload requirements in order to reduce costs. It involves analysing resource utilisation and identifying instances that are over-provisioned (too large) or under-provisioned. AWS Compute Optimizer provides rightsizing recommendations by analysing CloudWatch metrics. Rightsizing is a key cloud economics practice and contrasts with the on-premises tendency to over-provision for peak capacity.",
+  },
+  {
+    id: 404,
+    domain: 1,
+    text: "Which of the following best describes a fixed cost in an on-premises environment versus a variable cost in the AWS Cloud?",
+    type: "single",
+    options: [
+      "On-premises servers are paid monthly; AWS charges annually",
+      "On-premises requires large upfront hardware investment regardless of usage; AWS charges based on actual consumption",
+      "On-premises has lower total cost over 10 years; AWS costs increase with usage",
+      "On-premises and AWS have the same total cost — the difference is only timing",
+    ],
+    correct: [1],
+    explanation:
+      "On-premises infrastructure involves fixed costs — you purchase servers, networking equipment, and data centre space upfront regardless of how much you use them. AWS uses a variable cost model where you pay only for what you consume, scaling up or down as needed. This shift from CapEx (capital expenditure) to OpEx (operational expenditure) is one of the six advantages of the AWS Cloud. Fixed costs create financial risk when demand is unpredictable; variable costs align spending with actual value delivered.",
+  },
+
+  // ─── DOMAIN 2: Security — Audit Manager, compliance detail ──────────────────
+  {
+    id: 405,
+    domain: 2,
+    text: "A compliance team needs to continuously collect evidence for audits (e.g., SOC 2, PCI DSS) by automatically mapping AWS resource configurations to control requirements. Which service provides this capability?",
+    type: "single",
+    options: [
+      "AWS Config",
+      "AWS Audit Manager",
+      "AWS Artifact",
+      "AWS Security Hub",
+    ],
+    correct: [1],
+    explanation:
+      "AWS Audit Manager continuously audits your AWS usage to help you simplify how you assess risk and compliance. It maps AWS service activity to compliance frameworks (SOC 2, PCI DSS, HIPAA, FedRAMP, etc.) and automatically collects evidence — removing the manual effort of gathering screenshots and reports. AWS Config tracks configuration changes, AWS Artifact provides compliance documents/reports on demand, and Security Hub aggregates security findings. Audit Manager is the dedicated continuous audit evidence collection service.",
+    service: "Audit Manager",
+  },
+  {
+    id: 406,
+    domain: 2,
+    text: "Which AWS service provides on-demand access to AWS compliance reports such as SOC reports, PCI DSS Attestation of Compliance, and ISO certifications?",
+    type: "single",
+    options: [
+      "AWS Audit Manager",
+      "AWS Artifact",
+      "AWS Security Hub",
+      "AWS Config",
+    ],
+    correct: [1],
+    explanation:
+      "AWS Artifact is a self-service portal for on-demand access to AWS security and compliance documents, including ISO certifications, PCI DSS Attestation of Compliance, and SOC reports. These are the actual audit reports produced by AWS's third-party auditors. Customers can use these documents to demonstrate to their own auditors that the AWS infrastructure underpinning their workloads meets compliance requirements. AWS Audit Manager is for continuously collecting your own compliance evidence; Artifact provides AWS's evidence.",
+    service: "Artifact",
+  },
+  {
+    id: 407,
+    domain: 2,
+    text: "Which of the following are examples of governance and compliance services in AWS? (Select TWO)",
+    type: "multi",
+    options: [
+      "Amazon GuardDuty",
+      "AWS CloudTrail",
+      "AWS Config",
+      "Amazon Inspector",
+      "AWS WAF",
+    ],
+    correct: [1, 2],
+    explanation:
+      "AWS CloudTrail records API calls made in your account, providing an audit trail of all actions. AWS Config continuously monitors and records AWS resource configurations and evaluates them against desired policies. Together they form the backbone of governance and compliance monitoring. GuardDuty and Inspector are security threat detection and vulnerability assessment services. WAF is a web application firewall. CloudTrail and Config are the designated governance/auditing services referenced in Task Statement 2.2.",
+  },
+
+  // ─── DOMAIN 3: End-User Computing, Frontend, AppSync, SES ───────────────────
+  {
+    id: 408,
+    domain: 3,
+    text: "A company needs to provide employees with secure, managed access to internal web applications from any browser — without delivering a full virtual desktop. Which AWS service is designed for this use case?",
+    type: "single",
+    options: [
+      "Amazon WorkSpaces",
+      "Amazon AppStream 2.0",
+      "Amazon WorkSpaces Secure Browser",
+      "AWS Client VPN",
+    ],
+    correct: [2],
+    explanation:
+      "Amazon WorkSpaces Secure Browser (formerly Amazon WorkSpaces Web) is a fully managed, low-cost service for accessing internal web applications from a browser without a full virtual desktop. It isolates web browsing from corporate devices to protect against browser-borne threats. WorkSpaces provides full persistent virtual desktops. AppStream 2.0 streams desktop applications (non-browser apps). AWS Client VPN provides secure network access but doesn't isolate browsing.",
+    service: "WorkSpaces Secure Browser",
+  },
+  {
+    id: 409,
+    domain: 3,
+    text: "Which AWS service enables developers to build and deploy full-stack web and mobile applications, with hosting, authentication, APIs, and storage wired together?",
+    type: "single",
+    options: [
+      "AWS AppSync",
+      "AWS Amplify",
+      "Amazon API Gateway",
+      "AWS Elastic Beanstalk",
+    ],
+    correct: [1],
+    explanation:
+      "AWS Amplify is a set of tools and services for building full-stack web and mobile applications. It provides hosting, CI/CD, authentication (via Cognito), APIs (REST or GraphQL via AppSync), storage (S3), and more — all configurable through a CLI or visual console. AppSync is the managed GraphQL API service that Amplify can use as its API layer. Amplify is the higher-level developer platform; AppSync is a specific managed service for GraphQL APIs.",
+    service: "Amplify",
+  },
+  {
+    id: 410,
+    domain: 3,
+    text: "Which AWS service provides a managed GraphQL API that automatically syncs data between mobile/web clients and backend data sources in real time?",
+    type: "single",
+    options: [
+      "Amazon API Gateway",
+      "AWS AppSync",
+      "AWS Amplify",
+      "Amazon EventBridge",
+    ],
+    correct: [1],
+    explanation:
+      "AWS AppSync is a managed GraphQL service that simplifies application development by creating a flexible API to securely access, manipulate, and combine data from multiple sources. It supports real-time data synchronisation (subscriptions) so connected clients receive live updates. API Gateway is for REST/HTTP/WebSocket APIs. Amplify is a higher-level platform that can use AppSync as its API layer. EventBridge is a serverless event bus for application integration.",
+    service: "AppSync",
+  },
+  {
+    id: 411,
+    domain: 3,
+    text: "A company wants to send transactional emails (order confirmations, password resets) and marketing campaigns at scale from AWS. Which service is designed for this?",
+    type: "single",
+    options: [
+      "Amazon SNS",
+      "Amazon SES",
+      "Amazon Pinpoint",
+      "Amazon Connect",
+    ],
+    correct: [1],
+    explanation:
+      "Amazon Simple Email Service (Amazon SES) is a cost-effective, flexible, and scalable email service that enables developers to send transactional, marketing, and bulk email. It supports both sending and receiving email, and offers features like DKIM, SPF, and bounce/complaint handling. SNS sends notifications to multiple subscribers but is not an email marketing service. Pinpoint is for multi-channel marketing campaigns. Connect is the cloud contact centre service.",
+    service: "SES",
+  },
+  {
+    id: 412,
+    domain: 3,
+    text: "Which AWS service is a serverless, zero-ETL data integration service that makes it easy to discover, prepare, and combine data for analytics?",
+    type: "single",
+    options: [
+      "Amazon Athena",
+      "Amazon Kinesis",
+      "AWS Glue",
+      "Amazon QuickSight",
+    ],
+    correct: [2],
+    explanation:
+      "AWS Glue is a serverless data integration service that makes it easy to discover, prepare, move, and integrate data from multiple sources for analytics, machine learning, and application development. It includes a data catalogue, ETL (Extract, Transform, Load) jobs, and data quality capabilities. Athena queries data in S3 using SQL. Kinesis handles real-time streaming data. QuickSight is a business intelligence/visualisation service.",
+    service: "Glue",
+  },
+  {
+    id: 413,
+    domain: 3,
+    text: "Which AWS service enables you to build conversational interfaces (chatbots and voice assistants) using natural language understanding?",
+    type: "single",
+    options: [
+      "Amazon Polly",
+      "Amazon Transcribe",
+      "Amazon Lex",
+      "Amazon Comprehend",
+    ],
+    correct: [2],
+    explanation:
+      "Amazon Lex is the service that powers Amazon Alexa and enables you to build conversational interfaces using voice and text. It provides automatic speech recognition (ASR) and natural language understanding (NLU) to build chatbots and voice assistants. Amazon Polly converts text to speech. Amazon Transcribe converts speech to text. Amazon Comprehend performs natural language processing (NLP) to extract insights from text.",
+    service: "Lex",
+  },
+  {
+    id: 414,
+    domain: 3,
+    text: "A company wants to build an enterprise search solution that uses ML to find answers across internal documents, FAQs, and databases. Which AWS service provides this?",
+    type: "single",
+    options: [
+      "Amazon Kendra",
+      "Amazon Elasticsearch",
+      "Amazon Comprehend",
+      "Amazon Textract",
+    ],
+    correct: [0],
+    explanation:
+      "Amazon Kendra is an intelligent enterprise search service powered by machine learning. It understands natural language queries and returns specific answers — not just document links — from your content repositories (S3, SharePoint, Salesforce, databases, etc.). It differs from keyword-based search by understanding the intent and context of questions. Amazon Comprehend analyses text for sentiment, entities, and topics. Textract extracts text from documents. Amazon OpenSearch (formerly Elasticsearch) provides keyword/log search.",
+    service: "Kendra",
+  },
+
+  // ─── DOMAIN 4: Support, Billing, Resources — explicit exam guide gaps ────────
+  {
+    id: 415,
+    domain: 4,
+    text: "Which AWS service provides a personalised view of the health of AWS services and alerts you to events that may impact your resources — and is available to all AWS customers at no cost?",
+    type: "single",
+    options: [
+      "Amazon CloudWatch",
+      "AWS Health Dashboard",
+      "AWS Trusted Advisor",
+      "AWS Config",
+    ],
+    correct: [1],
+    explanation:
+      "The AWS Health Dashboard (formerly AWS Personal Health Dashboard) provides a personalised view of the status of AWS services and sends alerts and remediation guidance when events affect your specific resources. Unlike the general Service Health Dashboard (which shows all service status), the Health Dashboard filters events relevant to your account. It is available free to all AWS accounts. CloudWatch monitors your application metrics/logs. Trusted Advisor gives recommendations for cost, security, and performance.",
+    service: "Health Dashboard",
+  },
+  {
+    id: 416,
+    domain: 4,
+    text: "A development team wants to programmatically retrieve events about AWS service interruptions that affect their account so they can trigger automated remediation. Which AWS capability enables this?",
+    type: "single",
+    options: [
+      "Amazon CloudWatch Events",
+      "AWS Health API",
+      "AWS Trusted Advisor API",
+      "AWS Config Rules",
+    ],
+    correct: [1],
+    explanation:
+      "The AWS Health API provides programmatic access to AWS Health Dashboard data, enabling you to integrate health events into existing management systems, ticketing tools, or trigger automated Lambda functions for remediation. It is available to customers with Business, Enterprise On-Ramp, or Enterprise Support plans. The AWS Health API is part of the broader AWS Health service. CloudWatch Events/EventBridge reacts to your application events; Health API specifically surfaces AWS service health information.",
+    service: "Health API",
+  },
+  {
+    id: 417,
+    domain: 4,
+    text: "Which AWS resource is a community-based question-and-answer forum where customers, AWS employees, and AWS Partners can ask and answer technical questions about AWS?",
+    type: "single",
+    options: [
+      "AWS Knowledge Center",
+      "AWS re:Post",
+      "AWS Prescriptive Guidance",
+      "AWS Support Center",
+    ],
+    correct: [1],
+    explanation:
+      "AWS re:Post is the community-driven Q&A forum that replaced the original AWS Forums. It allows the community (customers, partners, and AWS experts) to ask and answer technical questions. AWS Knowledge Center is a curated library of FAQs and how-to articles written by AWS. AWS Prescriptive Guidance provides strategies, guides, and patterns for migrating and modernising. AWS Support Center is where you create and manage support cases.",
+    service: "re:Post",
+  },
+  {
+    id: 418,
+    domain: 4,
+    text: "A solutions architect wants to find proven strategies, migration patterns, and implementation guides vetted by AWS for migrating legacy applications. Which resource provides this?",
+    type: "single",
+    options: [
+      "AWS re:Post",
+      "AWS Knowledge Center",
+      "AWS Prescriptive Guidance",
+      "AWS Well-Architected Tool",
+    ],
+    correct: [2],
+    explanation:
+      "AWS Prescriptive Guidance provides battle-tested strategies, guides, and patterns from AWS technology experts to help accelerate cloud migration, modernisation, and optimisation. It is distinct from the Knowledge Center (FAQs), re:Post (community Q&A), and the Well-Architected Tool (workload reviews). Prescriptive Guidance is the go-to resource for structured, expert-recommended approaches to specific migration and modernisation scenarios.",
+  },
+  {
+    id: 419,
+    domain: 4,
+    text: "Which resource would an AWS customer visit to find curated articles and FAQs that answer common technical questions about AWS services, billing, and account management?",
+    type: "single",
+    options: [
+      "AWS re:Post",
+      "AWS Prescriptive Guidance",
+      "AWS Knowledge Center",
+      "AWS Whitepapers",
+    ],
+    correct: [2],
+    explanation:
+      "The AWS Knowledge Center is a curated library of frequently asked questions and their answers, written and maintained by AWS support engineers. It covers common technical questions across all AWS services. AWS re:Post is the community forum. Prescriptive Guidance provides migration strategies. Whitepapers are longer-form technical documents on architecture, security, and compliance topics.",
+    service: "Knowledge Center",
+  },
+  {
+    id: 420,
+    domain: 4,
+    text: "A customer receives emails about inappropriate use of AWS infrastructure originating from their account. Which AWS team do they contact to report abuse or get assistance with this?",
+    type: "single",
+    options: [
+      "AWS Security Hub",
+      "AWS Trust and Safety team",
+      "AWS GuardDuty response team",
+      "AWS Business Support",
+    ],
+    correct: [1],
+    explanation:
+      "The AWS Trust and Safety team handles reports of AWS resources being used for abusive or illegal activities — including spam, malware distribution, DDoS attacks, and phishing. Customers can report abuse via the AWS Report Abuse form or contact the team directly. This is distinct from AWS Security services (GuardDuty, Security Hub) which are tools customers use to monitor their own environments, and from the Support team which handles technical issues.",
+    service: "Trust and Safety",
+  },
+  {
+    id: 421,
+    domain: 4,
+    text: "Which of the following correctly describes the role of the AWS Partner Network (APN)?",
+    type: "single",
+    options: [
+      "A programme that allows AWS to resell third-party software through the AWS console",
+      "A global community of technology and consulting companies that build solutions on AWS, help customers migrate, and resell AWS services",
+      "An internal AWS team that provides enterprise customers with dedicated architects",
+      "A certification programme exclusively for AWS employees",
+    ],
+    correct: [1],
+    explanation:
+      "The AWS Partner Network (APN) is a global programme for technology and consulting companies that build solutions on AWS or help customers migrate and operate on AWS. APN partners include Independent Software Vendors (ISVs) who build software on AWS, and System Integrators (SIs)/Consulting Partners who help customers design, build, and manage AWS environments. Partners benefit from training, certifications, co-selling opportunities, and volume discounts. They are distinct from AWS Professional Services, which is AWS's own consulting team.",
+    service: "Partner Network",
+  },
+  {
+    id: 422,
+    domain: 4,
+    text: "A large enterprise wants hands-on help from AWS's own consultants to accelerate their cloud transformation. Which AWS resource provides this?",
+    type: "single",
+    options: [
+      "AWS Partner Network consulting partners",
+      "AWS Professional Services",
+      "AWS Enterprise Support TAM",
+      "AWS Marketplace",
+    ],
+    correct: [1],
+    explanation:
+      "AWS Professional Services is AWS's own global team of experts who help customers achieve their desired business outcomes using AWS. They work alongside customer teams and APN partners on specific engagements such as migrations, new application development, and cloud centre of excellence establishment. APN consulting partners are third-party companies; the TAM (Technical Account Manager) in Enterprise Support is an ongoing advisory relationship; AWS Marketplace is for purchasing third-party software.",
+    service: "Professional Services",
+  },
+  {
+    id: 423,
+    domain: 4,
+    text: "Which of the following correctly distinguishes Dedicated Hosts from Dedicated Instances?",
+    type: "single",
+    options: [
+      "Dedicated Hosts provide a physical server you control; Dedicated Instances are physically isolated at the host hardware level but you do not control the specific host",
+      "Dedicated Hosts are cheaper than Dedicated Instances",
+      "Dedicated Instances let you bring your own licences; Dedicated Hosts do not",
+      "Dedicated Hosts are shared with other AWS accounts; Dedicated Instances are not",
+    ],
+    correct: [0],
+    explanation:
+      "Dedicated Hosts give you an entire physical server dedicated to your use, with visibility into sockets, cores, and host ID — enabling BYOL (Bring Your Own License) for per-socket or per-core licensed software (e.g., Windows Server, SQL Server, Oracle). Dedicated Instances run on hardware dedicated to a single customer account, but you don't control which specific physical host they land on and don't get host-level visibility. Both ensure your instances are not shared with other AWS customer accounts. Dedicated Hosts are generally more expensive because you're reserving an entire physical server.",
+    service: "Dedicated Hosts",
+  },
+  {
+    id: 424,
+    domain: 4,
+    text: "A company needs to guarantee capacity in a specific Availability Zone for a planned event — but does not want to be billed for unused hours like a Reserved Instance. Which EC2 purchasing option achieves this?",
+    type: "single",
+    options: [
+      "Reserved Instances",
+      "Spot Instances",
+      "On-Demand Capacity Reservations",
+      "Savings Plans",
+    ],
+    correct: [2],
+    explanation:
+      "On-Demand Capacity Reservations allow you to reserve compute capacity in a specific Availability Zone for any duration without a required commitment. You pay for the reserved capacity whether or not you use it (at On-Demand rates), but unlike Reserved Instances there is no 1- or 3-year term commitment — you can create and cancel them at any time. This is useful for guaranteeing capacity during predictable peak events. Reserved Instances also commit capacity but require a 1- or 3-year term. Savings Plans provide billing discounts but don't reserve specific capacity.",
+    service: "Capacity Reservations",
+  },
+  {
+    id: 425,
+    domain: 4,
+    text: "Which AWS Support plan is the minimum required to access the AWS Health API programmatically?",
+    type: "single",
+    options: [
+      "Basic",
+      "Developer",
+      "Business",
+      "Enterprise On-Ramp",
+    ],
+    correct: [2],
+    explanation:
+      "The AWS Health API requires at least a Business Support plan. With Basic and Developer plans, you can view health events in the AWS Health Dashboard console, but programmatic API access is restricted to Business, Enterprise On-Ramp, and Enterprise plans. This is an important distinction — the console view is free, but the API (needed for automation and integrations) requires a paid Business or higher plan.",
+    service: "Health API",
+  },
+  {
+    id: 426,
+    domain: 4,
+    text: "Which of the following are benefits of being an AWS Partner through the AWS Partner Network (APN)? (Select TWO)",
+    type: "multi",
+    options: [
+      "Access to AWS training, certifications, and technical resources",
+      "Dedicated TAM assigned to all partner accounts",
+      "Volume discounts and co-selling opportunities with AWS",
+      "Free AWS Enterprise Support included",
+      "Unlimited free compute credits for all partners",
+    ],
+    correct: [0, 2],
+    explanation:
+      "AWS Partners in the APN benefit from access to AWS training and certifications, technical resources, co-selling opportunities (where AWS sales teams refer customers to qualified partners), and volume discounts on AWS services. Partners do not automatically get a dedicated TAM (that's Enterprise Support), free Enterprise Support, or unlimited credits. The APN is structured into tiers (Select, Advanced, Premier) with increasing benefits as partners demonstrate greater AWS knowledge and customer success.",
+    service: "Partner Network",
+  },
+  {
+    id: 427,
+    domain: 4,
+    text: "Data transfer into AWS (ingress) is generally free. Which of the following describes the typical AWS pricing for data transfer OUT of AWS to the internet?",
+    type: "single",
+    options: [
+      "Completely free regardless of volume",
+      "Charged per GB — with the first 100GB/month free under the Always Free tier, then tiered pricing that decreases at higher volumes",
+      "Flat rate per month regardless of volume",
+      "Charged only when transferring between AWS Regions, not to the internet",
+    ],
+    correct: [1],
+    explanation:
+      "AWS charges for data transferred OUT from AWS to the internet on a tiered basis. The first 100GB per month is free (Always Free tier). Beyond that, pricing decreases at higher volumes (economies of scale). Data transferred IN to AWS from the internet is always free. Data transferred between AWS services within the same Region is generally free or very low cost. Data transferred between Regions incurs separate regional data transfer charges. Understanding ingress vs egress pricing is important for cost optimisation.",
+  },
+  {
+    id: 428,
+    domain: 2,
+    text: "Which of the following tasks can ONLY be performed by the AWS account root user and cannot be delegated to IAM users or roles? (Select TWO)",
+    type: "multi",
+    options: [
+      "Creating IAM users",
+      "Changing the AWS account name or root email address",
+      "Closing the AWS account",
+      "Creating S3 buckets",
+      "Enabling MFA for IAM users",
+    ],
+    correct: [1, 2],
+    explanation:
+      "Certain sensitive account-level actions are restricted to the root user: closing the AWS account, changing the account name/email/password, activating IAM access to the Billing console, enabling/disabling MFA on the root account, restoring IAM user permissions, and changing the AWS Support plan. Creating IAM users, S3 buckets, and enabling MFA for other IAM users can all be done by IAM users/roles with appropriate permissions. Protecting the root account with MFA and not using it for daily tasks is a fundamental security best practice.",
+  },
+  {
+    id: 429,
+    domain: 2,
+    text: "Which type of IAM identity is best suited for granting permissions to an AWS service (such as Lambda) to access another AWS service (such as DynamoDB)?",
+    type: "single",
+    options: [
+      "IAM user with access keys",
+      "IAM group with attached policy",
+      "IAM role",
+      "Root user credentials",
+    ],
+    correct: [2],
+    explanation:
+      "IAM roles are the correct mechanism for granting AWS services permissions to interact with other AWS services. A Lambda function assumes an execution role that grants it access to DynamoDB, S3, etc. Roles use temporary security credentials (no long-lived access keys), reducing the risk of credential compromise. IAM users with access keys are for human identities or legacy applications — not the recommended approach for service-to-service access. Using root credentials for this is a severe security anti-pattern.",
+    service: "IAM",
+  },
+  {
+    id: 430,
+    domain: 1,
+    text: "Which of the following are components of the AWS Cloud Adoption Framework (AWS CAF)? (Select TWO)",
+    type: "multi",
+    options: [
+      "Business perspective",
+      "Infrastructure perspective",
+      "People perspective",
+      "Networking perspective",
+      "Hardware perspective",
+    ],
+    correct: [0, 2],
+    explanation:
+      "The AWS CAF organises guidance into six perspectives: Business, People, Governance, Platform, Security, and Operations. The Business perspective aligns IT with business needs and ensures cloud investments deliver measurable business outcomes. The People perspective focuses on culture, structure, leadership, and workforce transformation needed for cloud adoption. 'Infrastructure', 'Networking', and 'Hardware' are not CAF perspective names — these concerns are addressed within the Platform and Operations perspectives.",
+    service: "AWS CAF",
+  },
 ];
